@@ -1,6 +1,6 @@
 import os
 from pecan.rest import RestController
-from pecan import expose, abort
+from pecan import expose, abort, conf
 import time
 
 from udapi.model.cert import SSLCert
@@ -9,16 +9,18 @@ from udapi.model.cert import SSLCert
 class CertController(RestController):
     certs = {}
     update = 0
+    root_dir = conf.cert_dir
 
     def _check_refresh(self):
         if self.update < (time.time() - 60):
             self._refresh()
 
     def _refresh(self):
-        root_dir = '/home/steve/source/git/dsa/dsa-puppet/modules/ssl/files/servicecerts'
-        for f in os.listdir(root_dir):
+        for f in os.listdir(self.root_dir):
+            if not f.endswith('.crt'):
+                continue
             short = f[:-4]
-            self.certs[short] = SSLCert(os.path.join(root_dir, f))
+            self.certs[short] = SSLCert(os.path.join(self.root_dir, f))
         self.update = time.time()
 
     @expose('json')
