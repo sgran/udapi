@@ -27,7 +27,7 @@ class CertController(RestController):
     @expose('json')
     def get_all(self):
         self._check_refresh()
-        return {'update': self.update,
+        return {'update': time.strftime('%c', time.localtime(self.update)),
                 'message': sorted(self.certs.keys()),
         }
 
@@ -35,7 +35,7 @@ class CertController(RestController):
     def get_one(self, cert):
         self._check_refresh()
         if cert in self.certs.keys():
-            return {'update': self.update,
+            return {'update': time.strftime('%c', time.localtime(self.update)),
                     'message': self.certs[cert].to_data()
             }
         abort(404)

@@ -28,7 +28,7 @@ class HostController(RestController):
     @expose('json')
     def get_all(self):
         self._check_refresh()
-        return {'update': self.update,
+        return {'update': time.strftime('%c', time.localtime(self.update)),
                 'message': sorted(self.hosts.keys()),
         }
 
@@ -36,7 +36,7 @@ class HostController(RestController):
     def get_one(self, hostname):
         self._check_refresh()
         if hostname in self.hosts.keys():
-            return {'update': self.update,
+            return {'update': time.strftime('%c', time.localtime(self.update)),
                     'message': self.hosts[hostname].to_data()
             }
         abort(404)
