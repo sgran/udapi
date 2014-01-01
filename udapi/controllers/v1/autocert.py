@@ -6,4 +6,7 @@ from udapi.controllers.v1.cert import CertController
 
 
 class AutoCertController(CertController):
-    root_dir = conf.auto_cert_dir
+    def __init__(self):
+        self.certs = {}
+        self.update = 0
+        self.root_dir = conf.auto_cert_dir

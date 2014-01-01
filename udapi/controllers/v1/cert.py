@@ -7,9 +7,10 @@ from udapi.model.cert import SSLCert
 
 
 class CertController(RestController):
-    certs = {}
-    update = 0
-    root_dir = conf.cert_dir
+    def __init__(self):
+        self.certs = {}
+        self.update = 0
+        self.root_dir = conf.cert_dir
 
     def _check_refresh(self):
         if self.update < (time.time() - 60):
