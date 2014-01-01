@@ -1,6 +1,6 @@
 import ldap
 from pecan.rest import RestController
-from pecan import expose, abort
+from pecan import expose, abort, conf
 import time
 
 from udapi.model.host import Host
@@ -14,7 +14,7 @@ class HostController(RestController):
         self._refresh()
 
     def _check_refresh(self):
-        if self.update < (time.time() - 60):
+        if self.update < (time.time() - conf.cache_time):
             self._refresh()
 
     def _refresh(self):

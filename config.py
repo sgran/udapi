@@ -40,6 +40,8 @@ logging = {
 cert_dir = '/home/steve/source/git/dsa/dsa-puppet/modules/ssl/files/servicecerts'
 auto_cert_dir = '/tmp/autoca'
 
+cache_time = 60
+
 # Custom Configurations must be in Python dictionary format::
 #
 # foo = {'bar':'baz'}
