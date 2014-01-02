@@ -11,8 +11,7 @@ class SSLCert(object):
         self.notafter = None
         self.notbefore = None
 
-        try:
-            f = open(name)
+        with open(name) as f:
             cert = f.read()
             x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, cert)
             for k, v in x509.get_subject().get_components():
@@ -23,12 +22,6 @@ class SSLCert(object):
             self.body = cert
             self.notafter = time.strptime(x509.get_notAfter(), '%Y%m%d%H%M%SZ')
             self.notbefore = time.strptime(x509.get_notBefore(), '%Y%m%d%H%M%SZ')
-
-        finally:
-            try:
-                f.close()
-            except:
-                pass
 
     def to_data(self):
         data = copy.deepcopy(self.__dict__)
