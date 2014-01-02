@@ -1,14 +1,18 @@
 from pecan import expose
 from webob.exc import status_map
 
-import udapi.controllers.v1
+from udapi.controllers.v1 import V1Controller
 
 
 class RootController(object):
 
+    def __init__(self):
+        super(RootController, self).__init__()
+        self.v1 = V1Controller()
+
     @expose('json')
     def index(self):
-        return {'versions': ['v1']}
+        return {'versions': self.__dict__.keys()}
 
     @expose('error.html')
     def error(self, status):
@@ -18,4 +22,3 @@ class RootController(object):
             status = 500
         message = getattr(status_map.get(status), 'explanation', '')
         return dict(status=status, message=message)
-    v1 = udapi.controllers.v1.V1Controller()
