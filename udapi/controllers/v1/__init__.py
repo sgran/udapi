@@ -2,6 +2,7 @@ from pecan import expose
 from udapi.controllers.v1.host import HostController
 from udapi.controllers.v1.cert import CertController
 from udapi.controllers.v1.autocert import AutoCertController
+from udapi.controllers.v1.domain import DomainController
 
 
 class V1Controller(object):
@@ -11,6 +12,7 @@ class V1Controller(object):
         self.hosts = HostController()
         self.certs = CertController()
         self.autoca = AutoCertController()
+        self.domains = DomainController()
 
     @expose('json')
     def index(self):
