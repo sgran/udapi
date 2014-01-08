@@ -6,7 +6,7 @@ from webob.exc import status_map
 class BaseIndexController(object):
     @expose('json')
     def index(self):
-        return {'versions': self.__dict__.keys()}
+        return self.__dict__.keys()
 
     @expose('error.html')
     def error(self, status):
