@@ -1,4 +1,4 @@
-from udapi.controllers.v1.certs.cert import CertController
+from udapi.controllers.v1.certs.base import CertController
 
 
 class ExternalCertController(CertController):

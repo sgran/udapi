@@ -1,6 +1,6 @@
 from pecan import conf
 
-from udapi.controllers.v1.certs.cert import CertController
+from udapi.controllers.v1.certs.base import CertController
 
 
 class AutoCertController(CertController):
