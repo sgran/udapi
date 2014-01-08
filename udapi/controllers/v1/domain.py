@@ -1,3 +1,4 @@
+import copy
 import ldap
 from pecan import conf, expose
 import time
@@ -25,10 +26,12 @@ class DebNetController(BaseRestController):
                     entries[name] = []
                 entries[name].append(entry)
 
+        records = {}
         for name, data in entries.iteritems():
-            self.stuff[name] = RRSet(name, data)
-
+            records[name] = RRSet(name, data)
         l.unbind_ext_s()
+
+        self.stuff = copy.deepcopy(records)
         self.update = time.time()
 
 
@@ -40,7 +43,7 @@ class DomainController(BaseRestController):
 
     @expose('json')
     def index(self):
-        data = self.__dict__.keys()
+        data = copy.deepcopy(self.__dict__.keys())
         data.remove('stuff')
         data.remove('update')
         return sorted(data)

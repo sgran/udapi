@@ -25,7 +25,10 @@ class BaseRestController(RestController):
 
     def _check_refresh(self):
         if self.update < (time.time() - conf.cache_time):
-            self._refresh()
+            try:
+                self._refresh()
+            except:
+                pass
 
     def _refresh(self):
         pass

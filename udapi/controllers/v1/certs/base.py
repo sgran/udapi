@@ -1,3 +1,4 @@
+import copy
 import os
 from pecan import conf
 import time
@@ -12,9 +13,12 @@ class CertController(BaseRestController):
         self.root_dir = conf.cert_dir
 
     def _refresh(self):
+        records = {}
         for f in os.listdir(self.root_dir):
             if not f.endswith('.crt'):
                 continue
             short = f[:-4]
-            self.stuff[short] = SSLCert(os.path.join(self.root_dir, f))
+            records[short] = SSLCert(os.path.join(self.root_dir, f))
+
+        self.stuff = copy.deepcopy(records)
         self.update = time.time()
