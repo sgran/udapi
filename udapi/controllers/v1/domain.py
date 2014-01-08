@@ -2,8 +2,8 @@ import ldap
 from pecan import conf, expose
 import time
 
-from udapi.model.dns import RRSet
 from udapi.controllers.base import BaseRestController
+from udapi.model.dns import RRSet
 
 
 class DebNetController(BaseRestController):

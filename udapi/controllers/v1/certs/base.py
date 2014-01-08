@@ -2,8 +2,8 @@ import os
 from pecan import conf
 import time
 
-from udapi.model.cert import SSLCert
 from udapi.controllers.base import BaseRestController
+from udapi.model.cert import SSLCert
 
 
 class CertController(BaseRestController):
