@@ -22,13 +22,15 @@ class BaseRestController(RestController):
     def __init__(self):
         self.stuff = {}
         self.update = 0
+        self.error = False
 
     def _check_refresh(self):
         if self.update < (time.time() - conf.cache_time):
             try:
                 self._refresh()
+                self.error = False
             except:
-                pass
+                self.error = True
 
     def _refresh(self):
         pass
@@ -38,6 +40,7 @@ class BaseRestController(RestController):
         self._check_refresh()
         return {'update': time.strftime('%c', time.localtime(self.update)),
                 'message': sorted(self.stuff.keys()),
+                'error': self.error,
         }
 
     @expose('json')
@@ -45,6 +48,7 @@ class BaseRestController(RestController):
         self._check_refresh()
         if thing in self.stuff.keys():
             return {'update': time.strftime('%c', time.localtime(self.update)),
-                    'message': self.stuff[thing].to_data()
+                    'message': self.stuff[thing].to_data(),
+                    'error': self.error,
             }
         abort(404)
