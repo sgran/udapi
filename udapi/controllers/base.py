@@ -19,6 +19,11 @@ class BaseIndexController(object):
 
 
 class BaseRestController(RestController):
+
+    _custom_actions = {
+        'expand': ['GET']
+    }
+
     def __init__(self):
         self.stuff = {}
         self.update = 0
@@ -34,6 +39,18 @@ class BaseRestController(RestController):
 
     def _refresh(self):
         pass
+
+    @expose('json')
+    def expand(self):
+        self._check_refresh()
+        data = []
+        for k in sorted(self.stuff.keys()):
+            data.append(self.stuff[k].to_data())
+
+        return {'update': time.strftime('%c', time.localtime(self.update)),
+                'message': data,
+                'error': self.error,
+        }
 
     @expose('json')
     def get_all(self):
