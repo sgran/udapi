@@ -21,7 +21,7 @@ class BaseIndexController(object):
 class BaseRestController(RestController):
 
     _custom_actions = {
-        'expand': ['GET']
+        '_expand': ['GET']
     }
 
     def __init__(self):
@@ -41,7 +41,7 @@ class BaseRestController(RestController):
         pass
 
     @expose('json')
-    def expand(self):
+    def _expand(self):
         self._check_refresh()
         data = []
         for k in sorted(self.stuff.keys()):
