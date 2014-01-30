@@ -44,6 +44,9 @@ class DomainController(BaseRestController):
     @expose('json')
     def index(self):
         data = copy.deepcopy(self.__dict__.keys())
-        data.remove('stuff')
-        data.remove('update')
+        for x in ['stuff', 'update', 'error']:
+            try:
+                data.remove(x)
+            except ValueError:
+                pass
         return sorted(data)
